@@ -18,9 +18,7 @@
 extern struct leddevice ldev;
 
 devcall ledopen(
-        struct dentry *devptr,  /* Entry in device switch table */
-        char *name,             /* Unused for a led device */
-        char *mode              /* Unused for a led device */
+        struct dentry *devptr  /* Entry in device switch table */
         )
 {
 

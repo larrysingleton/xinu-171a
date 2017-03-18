@@ -1,4 +1,4 @@
-/* ledclose.c - ledclose */
+/* ledgetc.c - ledgetc */
 
 #include <xinu.h>
 
@@ -10,35 +10,23 @@
  *
 */
 
-
 /*------------------------------------------------------------------------
- * ledclose  -  Close the led "device"
+ * ledgetc  -  Read the led "device"
  *------------------------------------------------------------------------
  */
 
 extern struct leddevice ldev;
 
-devcall ledclose(
+devcall ledgetc(
         struct dentry *devptr  /* Entry in device switch table */
         )
 {
 
-
     /* if the device is not open - return SYSERR */
-    if (ldev.status!=LED_CLOSE) {
+    if (ldev.status==LED_CLOSE) {
         return SYSERR;
     }
 
-    /* make sure LED is not illuminated */
-    vGalileoBlinkLEDUsingLegacyGPIO(0);
-
-    /* set illuminated flag to OFF */
-    ldev.illuminated=LED_OFF;
-
-    /* set the device status to not opened */
-    ldev.status=LED_CLOSE; 
-
-    /* reurn OK */
-    return OK;
+    /* return the illuminated flag */
+    return (devcall)ldev.illuminated;
 }
-

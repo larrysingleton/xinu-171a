@@ -1,0 +1,120 @@
+In file included from ../system/gpio_i2c.c:5:0:
+../include/gpio_i2c.h:189:5: error: unknown type name ‘uintn’
+     uintn I2CDeviceAddress : 10;
+     ^
+../system/gpio_i2c.c: In function ‘uiGalileoGPIORead’:
+../system/gpio_i2c.c:59:32: error: ‘uintn’ undeclared (first use in this function)
+  return *((volatile uint32 *) (uintn)(IohGpioBase + Offset))
+                                ^
+../system/gpio_i2c.c:59:32: note: each undeclared identifier is reported only once for each function it appears in
+../system/gpio_i2c.c: In function ‘vGalileoGPIOWrite’:
+../system/gpio_i2c.c:74:28: error: ‘uintn’ undeclared (first use in this function)
+     *((volatile uint32 *) (uintn)(IohGpioBase + Offset)) = Data32;
+                            ^
+../system/gpio_i2c.c: At top level:
+../system/gpio_i2c.c:505:1: error: unknown type name ‘uintn’
+ static uintn GetI2CIoPortBaseAddress(void)
+ ^
+../system/gpio_i2c.c: In function ‘GetI2CIoPortBaseAddress’:
+../system/gpio_i2c.c:509:5: error: unknown type name ‘int8’
+     int8 Func = IOH_I2C_GPIO_FUNCTION_NUMBER;
+     ^
+../system/gpio_i2c.c:512:5: error: unknown type name ‘uintn’
+     uintn I2CIoPortBaseAddress = mem_read(I2C_controller_base,
+     ^
+../system/gpio_i2c.c: In function ‘DisableI2CController’:
+../system/gpio_i2c.c:535:5: error: unknown type name ‘uintn’
+     uintn I2CIoPortBaseAddress;
+     ^
+../system/gpio_i2c.c:549:35: error: ‘uintn’ undeclared (first use in this function)
+     Data = *((volatile uint32 *) (uintn)(Addr));
+                                   ^
+../system/gpio_i2c.c: In function ‘EnableI2CController’:
+../system/gpio_i2c.c:588:5: error: unknown type name ‘uintn’
+     uintn I2CIoPortBaseAddress;
+     ^
+../system/gpio_i2c.c:601:35: error: ‘uintn’ undeclared (first use in this function)
+     Data = *((volatile uint32 *) (uintn)(Addr));
+                                   ^
+../system/gpio_i2c.c: In function ‘InitializeInternal’:
+../system/gpio_i2c.c:621:5: error: unknown type name ‘uintn’
+     uintn I2CIoPortBaseAddress;
+     ^
+../system/gpio_i2c.c:622:5: error: unknown type name ‘uintn’
+     uintn Addr;
+     ^
+../system/gpio_i2c.c:645:35: error: ‘uintn’ undeclared (first use in this function)
+     Data = *((volatile uint32 *) (uintn)(Addr));
+                                   ^
+../system/gpio_i2c.c: In function ‘WaitForStopDet’:
+../system/gpio_i2c.c:731:5: error: unknown type name ‘uintn’
+     uintn I2CIoPortBaseAddress;
+     ^
+../system/gpio_i2c.c:747:32: error: ‘uintn’ undeclared (first use in this function)
+  Data = *((volatile uint32 *) (uintn)(Addr));
+                                ^
+../system/gpio_i2c.c: At top level:
+../system/gpio_i2c.c:779:26: error: unknown type name ‘uintn’
+ uint32 WriteMultipleByte(uintn I2CAddress, uint8 *WriteBuffer,
+                          ^
+../system/gpio_i2c.c:780:5: error: unknown type name ‘uintn’
+     uintn Length)
+     ^
+../system/gpio_i2c.c:842:29: error: unknown type name ‘uintn’
+     I2C_ADDR_MODE AddrMode, uintn *Length, void *Buffer)
+                             ^
+../system/gpio_i2c.c:863:25: error: unknown type name ‘uintn’
+ uint32 ReadMultipleByte(uintn I2CAddress, uint8 *Buffer,
+                         ^
+../system/gpio_i2c.c:864:2: error: unknown type name ‘uintn’
+  uintn WriteLength, uintn ReadLength)
+  ^
+../system/gpio_i2c.c:864:21: error: unknown type name ‘uintn’
+  uintn WriteLength, uintn ReadLength)
+                     ^
+../system/gpio_i2c.c:989:29: error: unknown type name ‘uintn’
+     I2C_ADDR_MODE AddrMode, uintn *WriteLength, uintn *ReadLength,
+                             ^
+../system/gpio_i2c.c:989:49: error: unknown type name ‘uintn’
+     I2C_ADDR_MODE AddrMode, uintn *WriteLength, uintn *ReadLength,
+                                                 ^
+../system/gpio_i2c.c: In function ‘Pcal9555SetPortRegBit’:
+../system/gpio_i2c.c:1020:5: error: unknown type name ‘uintn’
+     uintn ReadLength;
+     ^
+../system/gpio_i2c.c:1021:5: error: unknown type name ‘uintn’
+     uintn WriteLength;
+     ^
+../system/gpio_i2c.c:1032:39: error: ‘uintn’ undeclared (first use in this function)
+     I2cDeviceAddr.I2CDeviceAddress = (uintn)Pcal9555SlaveAddr;
+                                       ^
+../system/gpio_i2c.c:1032:45: error: expected ‘;’ before ‘Pcal9555SlaveAddr’
+     I2cDeviceAddr.I2CDeviceAddress = (uintn)Pcal9555SlaveAddr;
+                                             ^
+../system/gpio_i2c.c:1058:5: warning: implicit declaration of function ‘I2CReadMultipleBytes’ [-Wimplicit-function-declaration]
+     I2CReadMultipleBytes(
+     ^
+../system/gpio_i2c.c:1078:5: warning: implicit declaration of function ‘I2CWriteMultipleBytes’ [-Wimplicit-function-declaration]
+     I2CWriteMultipleBytes(
+     ^
+../system/gpio_i2c.c: At top level:
+../system/gpio_i2c.c:586:13: warning: ‘EnableI2CController’ defined but not used [-Wunused-function]
+ static void EnableI2CController(void)
+             ^
+../system/gpio_i2c.c:619:15: warning: ‘InitializeInternal’ defined but not used [-Wunused-function]
+ static uint32 InitializeInternal(I2C_ADDR_MODE AddrMode)
+               ^
+../system/gpio_i2c.c:689:13: warning: ‘I2cEntry’ defined but not used [-Wunused-function]
+ static void I2cEntry(uint16 *SaveCmdPtr, uint32 *SaveBar0Ptr)
+             ^
+../system/gpio_i2c.c:712:13: warning: ‘I2cExit’ defined but not used [-Wunused-function]
+ static void I2cExit(uint16 SaveCmd, uint32 SaveBar0)
+             ^
+../system/gpio_i2c.c:729:15: warning: ‘WaitForStopDet’ defined but not used [-Wunused-function]
+ static uint32 WaitForStopDet(void)
+               ^
+../system/gpio_i2c.c: In function ‘uiGalileoGPIORead’:
+../system/gpio_i2c.c:63:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+make: *** [binaries/gpio_i2c.o] Error 1

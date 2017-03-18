@@ -1,0 +1,69 @@
+March 15, 2017
+--------------
+This is the SECOND version of Xinu for CSCI 8530, and includes the code base
+needed for the second programming assignment. Specifically it differs from the
+previous (xinu-171) distribution as follows:
+
+1. The files system/gpio-i2c.c, include/gpio-i2c.h, include/galileo-gen-defs.h,
+   wnd shell/xsh_blink.c have been added. 
+
+2. The file shell/shell.c has been modified to add the appropriate entry for
+   the blink command.
+
+3. The file shprototypes.h has been modified to include the prototype for the
+   xsh_blink function.
+
+4. The file include/kernel.h ha2 been modified to add a few type definitions.
+
+5. This DESCRIPTION file has been modified.
+
+To verify you have a correct version of the distribution, it is recommended
+that you:
+
+1. Install the software distribution in a suitable directory structure, usually
+   named xinu-171 when you unpack to gzipped tar file (xinu-171a.tar.gz).
+2. Change the working directory to compile.
+3. Execute the commands "make clean;make rebuild;make depend;make" to rebuild
+   everything.
+4. Download xinu.elf to your microSD card.
+5. Boot xinu.
+6. Try running the blink command. For example, "blink 10" should cause an LED
+   on the Galileo board next to the USH Host connector to go on and off 10
+   times with a 500 millisecond interval.
+
+Read the source code of xsh_blink.c for additional information.
+
+January 19, 2017
+----------------
+This directory holds Xinu sources for the Galileo. This version is specifically
+for students in CSCI 8530 at the University of Nebraska at Omaha. It is the
+initial version for the Spring 2017 semester.
+
+It is a modification of the Purdue Xinu distribution for the Galileo.
+Specifically, it deals with the possibility that (a) there is no Ethernet link,
+or (b) there is Ethernet but no DHCP server, or (c) the user uses the
+netstatus command to shut down the networking.
+
+It also has vacuous versions of the swait and ssignal system functions (in the
+expected files), and an implemention of a solution to the Dining Philosopers 
+problem using swait and ssignal. Of course it won't work correctly until those
+system calls are written. Implementation of those system calls may, or may not,
+be assigned during the Spring 2017 semester.
+
+The mklfs command is provided to build a local filesystem on the RAM disk.
+A few additional commands are provided to manipulate files, along with a
+few extensions to the LFS devices.
+
+Multiple timeserver IP addresses are defined in net/dhcp.c. These are used in
+getutime, in the order given, as needed in case of timeouts. The IP addresses
+can obviously be changed as desired.
+
+This version has the UECHO device (which should eventually be renamed).
+
+A simple BASIC interpreter is provided.
+
+A simple line-oriented text editor calle "e0" is provided.
+
+A TFTP ("Trivial File Transfer Protocol") client is provided.
+
+The "reboot" command is provided, and works with Galileo Gen 1 and Gen 2.

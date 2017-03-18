@@ -26,22 +26,22 @@ devcall ledwrite(
 
     /* if the device is not open - return SYSERR */
     if (ldev.status==LED_CLOSE) {
-        return SYSERR;
+        return (devcall)SYSERR;
     }
 
     /* only 1 character allowed */
     if (n!=1) {
-        return SYSERR;
+        return (devcall)SYSERR;
     }
 
     /* only allowed to write LED_ON or LED_OFF */
     if (*buff != LED_ON && *buff != LED_OFF) {
-        return SYSERR;
+        return (devcall)SYSERR;
     }
 
     /* set the flag */
     ldev.illuminated = *buff;
 
     /* return OK */
-    return OK;
+    return (devcall)OK;
 }

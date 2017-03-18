@@ -24,7 +24,7 @@ devcall ledgetc(
 
     /* if the device is not open - return SYSERR */
     if (ldev.status==LED_CLOSE) {
-        return SYSERR;
+        return (devcall)SYSERR;
     }
 
     /* return the illuminated flag */

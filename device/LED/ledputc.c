@@ -23,19 +23,19 @@ devcall ledputc(
         )
 {
 
-    /* if the device is not open - return SYSERR */
+    /* if the device is closed - return SYSERR */
     if (ldev.status==LED_CLOSE) {
-        return SYSERR;
+        return (devcall)SYSERR;
     }
 
     /* only allowed to write LED_ON or LED_OFF */
     if (value != LED_ON && value != LED_OFF) {
-        return SYSERR;
+        return (devcall)SYSERR;
     }
 
     /* set the flag */
     ldev.illuminated = value;
 
     /* return OK */
-    return OK;
+    return (devcall)OK;
 }

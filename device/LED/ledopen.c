@@ -24,9 +24,9 @@ devcall ledopen(
 
     /* if the device is already open - return SYSERR */
     if (ldev.status!=LED_CLOSE) {
-        return SYSERR;
+        return (devcall)SYSERR;
     }
 
     ldev.status=LED_OPEN; /* set the device status to open */
-    return devptr->dvnum;
+    return (devcall)devptr->dvnum;
 }

@@ -8,7 +8,6 @@
 
 
 #include <xinu.h>
-#include <gpio_i2c.h>
 
 int32 ledinit (
         struct dentry *devptr   /* Entry in the device switch table */
@@ -26,6 +25,6 @@ int32 ledinit (
     
     kprintf("\n******************* Initialize LED device ********************");
 
-    return OK;
+    return (devcall)OK;
 }
 

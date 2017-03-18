@@ -1,7 +1,6 @@
 /* ledclose.c - ledclose */
 
 #include <xinu.h>
-#include <gpio_i2c.h>
 
 /*
  * CSCI-8530 - Programming Assignment 2
@@ -26,11 +25,11 @@ devcall ledclose(
 
     /* if the device is not open - return SYSERR */
     if (ldev.status!=LED_CLOSE) {
-        return SYSERR;
+     return (devcall)SYSERR;
     }
 
     /* make sure LED is not illuminated */
-    vGalileoBlinkLEDUsingLegacyGPIO(0);
+    vGalileoBlinkLEDUsingLegacyGPIO(LED_CLOSE);
 
     /* set illuminated flag to OFF */
     ldev.illuminated=LED_OFF;
@@ -39,6 +38,6 @@ devcall ledclose(
     ldev.status=LED_CLOSE; 
 
     /* reurn OK */
-    return OK;
+    return (devcall)OK;
 }
 

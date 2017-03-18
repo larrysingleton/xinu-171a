@@ -44,3 +44,4 @@
 #include <uecho.h>
 #include <errors.h>
 #include <led.h>
+#include <gpio_i2c.h>

@@ -9,4 +9,4 @@
 struct leddevice {
     int status;          /* 0 if not open, non-zero otherwise */
     char illuminated;    /* Y if illuminated, N if not */
-}
+};

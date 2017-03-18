@@ -117,6 +117,15 @@ nam:
 		-w ioerr 	-s ioerr 	-n ioerr
 		-intr ioerr
 
+/* type of LED device */
+LED:
+    on gpio_i2c
+        -i ledinit  -o ledopen  -c ledclose
+        -r ledread  -g ledgetc  -p ledputc
+        -w ledwrite -s ioerr    -n ioerr
+        -intr ioerr
+
+
 %%
 
 /* Actual device declarations that each give the name of a device that	*/
@@ -175,6 +184,9 @@ nam:
    /* Define a SD memory card device */
 
    /* SDMC is sdmc on sd -csr 0 -irq 0051 */
+
+   /* Define a led device */
+   LED0 is LED on gpio_i2c
 
 %%
 

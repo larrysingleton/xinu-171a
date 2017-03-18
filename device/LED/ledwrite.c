@@ -35,12 +35,12 @@ devcall ledwrite(
     }
 
     /* only allowed to write LED_ON or LED_OFF */
-    if (strcmp(buff, LED_ON)!=0 && strcmp(buff, LED_OFF)!=0) {
+    if (*buff != LED_ON && *buff != LED_OFF) {
         return SYSERR;
     }
 
     /* set the flag */
-    ldev.illuminated = buff;
+    ldev.illuminated = *buff;
 
     /* return OK */
     return OK;

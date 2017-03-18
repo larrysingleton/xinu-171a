@@ -29,7 +29,7 @@ devcall ledputc(
     }
 
     /* only allowed to write LED_ON or LED_OFF */
-    if (char!=LED_ON && char!=LED_OFF) {
+    if (value != LED_ON && value != LED_OFF) {
         return SYSERR;
     }
 

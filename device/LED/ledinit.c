@@ -1,11 +1,10 @@
 /*
  * CSCI-8530 - Programming Assignment 2
  * Authors:
- *      Larry Singleton & Zack McFarland
+ *      Larry Singleton & Zac McFarland
  *
  *
 */
-
 
 #include <xinu.h>
 
@@ -15,13 +14,11 @@ int32 ledinit (
         struct dentry *devptr   /* Entry in the device switch table */
         )
 {
-
-    kprintf("\n******************* Initialize LED device ********************");
     /*--------------------------*/
     /* Initialize the datastructure. */
     /*--------------------------*/
-    ldev.status = 0;
-    ldev.illuminated = 'N';
+    ldev.status = LED_CLOSE;
+    ldev.illuminated = LED_OFF;
 
     /*--------------------------*/
     /* Initialize the hardware. */
@@ -29,8 +26,6 @@ int32 ledinit (
     vGalileoInitializeGpioController();
     vGalileoInitializeLegacyGPIO();
     vGalileoLegacyGPIOInitializationForLED();
-    
-    kprintf("\n******************* Initialize LED device ********************");
 
     return (devcall)OK;
 }

@@ -5,7 +5,7 @@
 /*
  * CSCI-8530 - Programming Assignment 2
  * Authors:
- *      Larry Singleton & Zack McFarland
+ *      Larry Singleton & Zac McFarland
  *
  *
 */
@@ -24,12 +24,12 @@ devcall ledclose(
 {
 
     /* if the device is not open - return SYSERR */
-    if (ldev.status!=LED_CLOSE) {
+    if (ldev.status != LED_OPEN) {
      return (devcall)SYSERR;
     }
 
     /* make sure LED is not illuminated */
-    vGalileoBlinkLEDUsingLegacyGPIO(LED_CLOSE);
+    vGalileoBlinkLEDUsingLegacyGPIO(0);
 
     /* set illuminated flag to OFF */
     ldev.illuminated=LED_OFF;

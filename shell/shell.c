@@ -18,6 +18,7 @@ const	struct	cmdent	cmdtab[] = {
 	{"arp",		FALSE,	xsh_arp},
 	{"basic",	FALSE,	xsh_basic},
 	{"blink",	FALSE,	xsh_blink},
+	{"blinkled",FALSE,	xsh_blinkled},
 	{"cat",		FALSE,	xsh_cat},
 	{"clear",	TRUE,	xsh_clear},
 	{"cp",		FALSE,	xsh_cp},

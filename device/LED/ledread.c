@@ -5,7 +5,7 @@
 /*
  * CSCI-8530 - Programming Assignment 2
  * Authors:
- *      Larry Singleton & Zack McFarland
+ *      Larry Singleton & Zac McFarland
  *
  *
 */

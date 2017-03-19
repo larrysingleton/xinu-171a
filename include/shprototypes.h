@@ -10,6 +10,9 @@ extern	shellcmd  xsh_basic	(int32, char *[]);
 /* in file xsh_blink.c */
 extern	shellcmd  xsh_blink	(int32, char *[]);
 
+/* in file xsh_blinkled.c */
+extern	shellcmd  xsh_blinkled	(int32, char *[]);
+
 /* in file xsh_cat.c */
 extern	shellcmd  xsh_cat	(int32, char *[]);
 

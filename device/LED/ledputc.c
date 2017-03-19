@@ -5,7 +5,7 @@
 /*
  * CSCI-8530 - Programming Assignment 2
  * Authors:
- *      Larry Singleton & Zack McFarland
+ *      Larry Singleton & Zac McFarland
  *
  *
 */
@@ -28,8 +28,15 @@ devcall ledputc(
         return (devcall)SYSERR;
     }
 
-    /* only allowed to write LED_ON or LED_OFF */
-    if (value != LED_ON && value != LED_OFF) {
+    /*
+     * Ensures only LED_ON and LED_OFF are allowed and
+     * transitions the device appropriately.
+     */
+    if(value == LED_ON) {
+        vGalileoBlinkLEDUsingLegacyGPIO(1);
+    } else if (value == LED_OFF) {
+        vGalileoBlinkLEDUsingLegacyGPIO(0);
+    } else {
         return (devcall)SYSERR;
     }
 

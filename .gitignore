@@ -1,2 +1,8 @@
 .idea/
 cmake-build-debug/
+compile/version
+compile/xinu.map
+compile/.*
+compile/binaries
+compile/xinu
+compile/xinu.map

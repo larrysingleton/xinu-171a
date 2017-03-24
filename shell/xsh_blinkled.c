@@ -7,6 +7,7 @@
 */
 
 #include <xinu.h>
+#include <stdlib.h>
 
 extern struct leddevice ldev;
 
@@ -26,17 +27,17 @@ static void usage(void) {
 
 static void printIResult(int result, bool8 status) {
     if(status) {
-        printf("%d     \tOK\n", result);
+        printf("%2d     \tOK\n", result);
     } else {
-        printf("%d     \tERROR\n", result);
+        printf("%2d     \tERROR\n", result);
     }
 }
 
 static void printCResult(char result, bool8 status) {
     if(status) {
-        printf("%c     \tOK\n", result);
+        printf("%2c     \tOK\n", result);
     } else {
-        printf("%c     \tERROR\n", result);
+        printf("%2c     \tERROR\n", result);
     }
 }
 
@@ -49,69 +50,77 @@ static void verifyHardwareConfiguration() {
     printf("Use Case          \tResult\tStatus\n");
 
     printf("[Successful Open] \t");
-    ledopen(LED0);
+    ledopen();
     printIResult(ldev.status, ldev.status == LED_OPEN);
 
     printf("[Double Open]     \t");
-    transientI = ledopen(LED0);
+    transientI = ledopen();
     printIResult(transientI, transientI == SYSERR);
 
     printf("[Put bad char]    \t");
-    transientI = ledputc(LED0, 'X');
+    transientI = ledputc('X');
     printIResult(transientI, transientI == SYSERR);
 
     printf("[Put char]        \t");
-    ledputc(LED0, LED_ON);
+    ledputc(LED_ON);
     printCResult(ldev.illuminated, ldev.illuminated == LED_ON);
 
     printf("[Write char]      \t");
-    ledputc(LED0, LED_OFF);
-    ledwrite(LED0, LED_ON, 1);
+    ledputc(LED_OFF);
+    ledwrite("Y", 1);
+    printCResult(ldev.illuminated, ldev.illuminated == LED_ON);
+
+    printf("[Write char YES]      \t");
+    ledputc(LED_OFF);
+    ledwrite("YES", 1);
     printCResult(ldev.illuminated, ldev.illuminated == LED_ON);
 
     printf("[Bad Write #]    \t");
-    transientI = ledwrite(LED0, LED_ON, 2);
+    transientI = ledwrite("Y", 2);
     printIResult(transientI, transientI == SYSERR);
 
     printf("[Bad Write X]    \t");
-    transientI = ledwrite(LED0, 'X', 1);
+    transientI = ledwrite("X", 1);
+    printIResult(transientI, transientI == SYSERR);
+
+    printf("[Bad Write STRING]    \t");
+    transientI = ledwrite("STRING", 1);
     printIResult(transientI, transientI == SYSERR);
 
     printf("[Get char]        \t");
-    transientC = ledgetc(LED0);
+    transientC = ledgetc();
     printCResult(transientC, transientC == LED_ON);
 
     printf("[Read char]       \t");
-
-    ledread(LED0, transientC, 1);
+    transientC = ledread(1);
     printCResult(transientC, transientC == LED_ON);
 
     printf("[Bad Read #]      \t");
-    transientI = ledread(LED0, transientC, 2);
+    transientI = ledread(2);
     printIResult(transientI, transientI == SYSERR);
 
     printf("[Successful Close]\t");
-    ledclose(LED0);
+    ledclose();
     printIResult(ldev.status, ldev.status == LED_CLOSE);
 
     printf("[Put Closed]     \t");
-    transientI = ledputc(LED0, LED_ON);
+    transientI = ledputc(LED_ON);
     printIResult(transientI, transientI == SYSERR);
 
     printf("[Write Closed]    \t");
-    transientI = ledwrite(LED0, LED_ON, 1);
+    transientI = ledwrite("Y", 1);
     printIResult(transientI, transientI == SYSERR);
 
     printf("[Get Closed]     \t");
-    transientI = ledgetc(LED0);
+    transientI = ledgetc();
     printIResult(transientI, transientI == SYSERR);
 
     printf("[Read Closed]     \t");
-    transientI = ledread(LED0, transientC, 1);
+    transientI = ledread(1);
     printIResult(transientI, transientI == SYSERR);
 
     printf("[Double Close]    \t");
-    transientI = ledclose(LED0);
+    transientI = ledclose();
     printIResult(transientI, transientI == SYSERR);
 
     printf("Device verification complete\n\n");
@@ -145,15 +154,17 @@ shellcmd xsh_blinkled(int nargs, char *args[]) {
     /*------------------*/
     /* Do the blinking. */
     /*------------------*/
-    ledopen(LED0);
+    ledopen();
     while (n > 0) {
-        ledputc(LED0, LED_ON);		/* illuminate the LED */
+        ledputc(LED_ON);		/* illuminate the LED */
         sleepms(msec);
-        ledputc(LED0, LED_OFF);		/* extinguish the LED */
+        ledputc(LED_OFF);		/* extinguish the LED */
         sleepms(msec);
         n--;
+        printf(".");
     }
-    ledclose(LED0);
 
+    ledclose();
+    printf("\n");
     return 0;
 }

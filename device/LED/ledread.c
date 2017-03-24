@@ -18,8 +18,6 @@
 extern struct leddevice ldev;
 
 devcall ledread(
-        struct dentry *devptr,  /* Entry in device switch table */
-        char *buff,             /* Character read */
         int32 n                 /* Number of characaters asked to read */
         )
 {

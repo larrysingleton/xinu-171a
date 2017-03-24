@@ -10,9 +10,7 @@
 
 struct leddevice ldev;
 
-int32 ledinit (
-        struct dentry *devptr   /* Entry in the device switch table */
-        )
+int32 ledinit (void)
 {
     /*--------------------------*/
     /* Initialize the datastructure. */

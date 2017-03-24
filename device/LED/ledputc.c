@@ -18,7 +18,6 @@
 extern struct leddevice ldev;
 
 devcall ledputc(
-        struct dentry *devptr,  /* Entry in device switch table */
         char value
         )
 {

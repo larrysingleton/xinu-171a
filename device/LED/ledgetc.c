@@ -17,9 +17,7 @@
 
 extern struct leddevice ldev;
 
-devcall ledgetc(
-        struct dentry *devptr  /* Entry in device switch table */
-        )
+devcall ledgetc(void)
 {
 
     /* if the device is not open - return SYSERR */

@@ -18,7 +18,6 @@
 extern struct leddevice ldev;
 
 devcall ledwrite(
-        struct dentry *devptr,  /* Entry in device switch table */
         char *buff,             /* Character to write */
         int32 n                 /* Number of characaters asked to write */
         )
@@ -38,16 +37,16 @@ devcall ledwrite(
      * Ensures only LED_ON and LED_OFF are allowed and
      * transitions the device appropriately.
      */
-    if(buff == LED_ON) {
+    if(*buff == LED_ON) {
         vGalileoBlinkLEDUsingLegacyGPIO(1);
-    } else if (buff == LED_OFF) {
+    } else if (*buff == LED_OFF) {
         vGalileoBlinkLEDUsingLegacyGPIO(0);
     } else {
         return (devcall)SYSERR;
     }
 
     /* set the flag */
-    ldev.illuminated = buff;
+    ldev.illuminated = *buff;
 
     /* return OK */
     return (devcall)OK;

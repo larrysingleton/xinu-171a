@@ -20,11 +20,19 @@ extern struct leddevice ldev;
 devcall ledopen( void )
 {
 
+    /* check to ensure device is good */
+    if (isbaddev(LED0)) { 
+        return (devcall)SYSERR;
+    }
+
     /* if the device is already open - return SYSERR */
     if (ldev.status!=LED_CLOSE) {
         return (devcall)SYSERR;
     }
 
-    ldev.status=LED_OPEN; /* set the device status to open */
-    return (devcall)OK;
+    /* set the device status to open */
+    ldev.status=LED_OPEN; 
+
+    /* return the device id */
+    return (devcall)LED0;
 }

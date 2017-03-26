@@ -7,6 +7,6 @@
 #define LED_CLOSE 0
 
 struct leddevice {
-    int status;          /* 0 if not open, non-zero otherwise */
+    short status;          /* 0 if not open, non-zero otherwise */
     char illuminated;    /* Y if illuminated, N if not */
 };

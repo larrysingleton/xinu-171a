@@ -1,3 +1,7 @@
+/* ledinit.c - ledinit */
+
+#include <xinu.h>
+
 /*
  * CSCI-8530 - Programming Assignment 2
  * Authors:
@@ -6,11 +10,10 @@
  *
 */
 
-#include <xinu.h>
 
 struct leddevice ldev;
 
-int32 ledinit (void)
+status ledinit (void)
 {
     /*--------------------------*/
     /* Initialize the datastructure. */
@@ -25,6 +28,7 @@ int32 ledinit (void)
     vGalileoInitializeLegacyGPIO();
     vGalileoLegacyGPIOInitializationForLED();
 
+    /* return OK */
     return (devcall)OK;
 }
 

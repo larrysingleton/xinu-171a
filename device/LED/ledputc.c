@@ -18,9 +18,15 @@
 extern struct leddevice ldev;
 
 devcall ledputc(
+        did32 device,   /* device Id to use */
         char value
         )
 {
+
+    /* check for a bad device */
+    if (isbaddev(device) || device != LED0) {
+        return (devcall)SYSERR;
+    }
 
     /* if the device is closed - return SYSERR */
     if (ldev.status==LED_CLOSE) {

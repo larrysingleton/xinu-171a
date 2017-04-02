@@ -1,0 +1,46 @@
+/*
+ * CSCI-8530 - Programming Assignment 2
+ * Authors:
+ *      Larry Singleton & Zac McFarland
+ *
+ *
+*/
+
+---------------------------------------------
+
+Files included for submission:
+config/Configuration
+shell/xsh_blinkled.c
+device/led/ledinit.c
+device/led/ledopen.c
+device/led/ledclose.c
+device/led/ledread.c
+device/led/ledgetc.c
+device/led/ledwrite.c
+device/led/ledputc.c
+include/led.h       - structure to hold led state
+include/xinu.h      - added #include <gpio_i2c.h>
+
+---------------------------------------------
+
+Files not included:
+shell/shell.c
+include/shprototypes.h
+config/Makefile
+include/prototypes.h
+
+---------------------------------------------
+
+Changes assumed to exist, requested not to include:
+
+include/prototypes.h
+/* in files led*.c */
+extern devcall  ledopen(struct dentry * , char *, char *);
+extern status   ledinit(struct dentry *);
+extern devcall  ledclose(struct dentry *);
+extern devcall  ledread(struct dentry *, char *, uint32);
+extern devcall  ledwrite(struct dentry *, char *, uint32);
+extern devcall  ledgetc(struct dentry *);
+extern devcall  ledputc(struct dentry *, char);
+
+---------------------------------------------

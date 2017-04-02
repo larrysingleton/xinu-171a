@@ -14,10 +14,11 @@ mkdir -p device
 mkdir -p include
 mkdir -p shell
 
+cp -p $XINU_HOME/README .
 cp -p $XINU_HOME/config/Configuration config
 cp -rp $XINU_HOME/device/led device
 cp -p $XINU_HOME/include/led.h include
-cp -p $XINU_HOME/include/prototypes.h include
+#cp -p $XINU_HOME/include/prototypes.h include
 cp -p $XINU_HOME/include/xinu.h include
 cp -p $XINU_HOME/shell/xsh_blinkled.c shell
 

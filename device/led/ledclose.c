@@ -19,12 +19,12 @@
 extern struct leddevice ldev;
 
 devcall ledclose(
-        did32   device  /* Device ID to use */
+        int32 device/* device to use */
         )
 {
 
     /* check for a bad device */
-    if (isbaddev(device) || device != LED0) {
+    if (isbaddev(device) || device != LED) {
         return (devcall)SYSERR;
     }
 

@@ -9,6 +9,8 @@
 #include <xinu.h>
 #include <stdlib.h>
 
+int ledcheck(void);
+
 extern struct leddevice ldev;
 
 static void usage(void) {
@@ -25,117 +27,8 @@ static void usage(void) {
     exit();
 }
 
-static void printIResult(int result, bool8 status) {
-    if(status) {
-        printf("%2d     \tOK\n", result);
-    } else {
-        printf("%2d     \tERROR\n", result);
-    }
-}
-
-static void printCResult(char result, bool8 status) {
-    if(status) {
-        printf("%2c     \tOK\n", result);
-    } else {
-        printf("%2c     \tERROR\n", result);
-    }
-}
-
-static void verifyHardwareConfiguration() {
-    did32 device;
-    int transientI;
-    char transientC;
-
-    printf("\n");
-    printf("--------------------------------------\n");
-    printf("- Verifying LED driver configuration -\n");
-    printf("--------------------------------------\n");
-    printf("Use Case          \tResult\tStatus\n");
-    printf("--------------------------------------\n");
-
-    printf("[Successful Open] \t");
-    device=ledopen();
-    printIResult(ldev.status, ldev.status == LED_OPEN);
-
-    printf("[Double Open]     \t");
-    transientI = ledopen();
-    printIResult(transientI, transientI == SYSERR);
-
-    printf("[Put bad char]    \t");
-    transientI = ledputc(device, 'X');
-    printIResult(transientI, transientI == SYSERR);
-
-    printf("[Put char]        \t");
-    ledputc(device, LED_ON);
-    printCResult(ldev.illuminated, ldev.illuminated == LED_ON);
-
-    printf("[Write char]      \t");
-    ledputc(device, LED_OFF);
-    ledwrite(device, "Y", 1);
-    printCResult(ldev.illuminated, ldev.illuminated == LED_ON);
-
-    printf("[Write char YES]      \t");
-    ledputc(device, LED_OFF);
-    ledwrite(device, "YES", 1);
-    printCResult(ldev.illuminated, ldev.illuminated == LED_ON);
-
-    printf("[Bad Write #]    \t");
-    transientI = ledwrite(device, "Y", 2);
-    printIResult(transientI, transientI == SYSERR);
-
-    printf("[Bad Write X]    \t");
-    transientI = ledwrite(device, "X", 1);
-    printIResult(transientI, transientI == SYSERR);
-
-    printf("[Bad Write STRING]    \t");
-    transientI = ledwrite(device, "STRING", 1);
-    printIResult(transientI, transientI == SYSERR);
-
-    printf("[Get char]        \t");
-    transientC = ledgetc(device);
-    printCResult(transientC, transientC == LED_ON);
-
-    printf("[Read char]       \t");
-    transientC = ledread(device, 1);
-    printCResult(transientC, transientC == LED_ON);
-
-    printf("[Bad Read #]      \t");
-    transientI = ledread(device, 2);
-    printIResult(transientI, transientI == SYSERR);
-
-    printf("[Successful Close]\t");
-    ledclose(LED0);
-    printIResult(ldev.status, ldev.status == LED_CLOSE);
-
-    printf("[Put Closed]     \t");
-    transientI = ledputc(device, LED_ON);
-    printIResult(transientI, transientI == SYSERR);
-
-    printf("[Write Closed]    \t");
-    transientI = ledwrite(device, "Y", 1);
-    printIResult(transientI, transientI == SYSERR);
-
-    printf("[Get Closed]     \t");
-    transientI = ledgetc(device);
-    printIResult(transientI, transientI == SYSERR);
-
-    printf("[Read Closed]     \t");
-    transientI = ledread(device, 1);
-    printIResult(transientI, transientI == SYSERR);
-
-    printf("[Double Close]    \t");
-    transientI = ledclose(LED0);
-    printIResult(transientI, transientI == SYSERR);
-
-    printf("[Bad Close]    \t\t");
-    transientI = ledclose(device+1);
-    printIResult(transientI, transientI == SYSERR);
-
-    printf("Device verification complete\n\n");
-}
-
 shellcmd xsh_blinkled(int nargs, char *args[]) {
-    did32 device;
+    int32 device;
     int n, msec;
 
     if (nargs == 2 && strcmp(args[1],"--help") == 0)
@@ -158,12 +51,12 @@ shellcmd xsh_blinkled(int nargs, char *args[]) {
     if (n < 1)
         usage();
 
-    verifyHardwareConfiguration();
+    ledcheck();
 
     /*------------------*/
     /* Do the blinking. */
     /*------------------*/
-    device=ledopen();
+    device=open(LED, "unused", "unused");
     while (n > 0) {
         ledputc(device, LED_ON);		/* illuminate the LED */
         sleepms(msec);
@@ -176,4 +69,156 @@ shellcmd xsh_blinkled(int nargs, char *args[]) {
     ledclose(device);
     printf("\n");
     return 0;
+}
+
+/*-------------------------------------------------------------------------*/
+/* Verify, to the extent possible, the proper operation of the LED device. */
+/* If an incorrect result is detected, display a message and return 0.     */
+/* Otherwise return 1.                                                     */
+/*-------------------------------------------------------------------------*/
+/* Note that the type "devcall" is the same as "int32"; see kernel.h.      */
+/* Also note that OK is defined as 1, the normal system call return.       */
+/* The write and read system calls return the number of bytes written or   */
+/* read, so OK would be appropriate for the result of these.               */
+/* There is a difference between the result of putc in Xinu and putc in    */
+/* standard C. In Xinu, putc returns OK on success. In standard C, putc    */
+/* returns the character written on success. We check for OK in this code. */
+/*-------------------------------------------------------------------------*/
+int ledcheck(void)
+{
+    int32 descr;				/* valid descriptor */
+    int32 edescr;				/* invalid descriptor */
+    int32 result;				/* result of I/O */
+    char buff[10];				/* data buffer */
+
+    /*-------------------------------*/
+    /* Test open and close behavior. */
+    /*-------------------------------*/
+    descr = open(LED,"unused","unused");	/* Try to open */
+    if (descr == SYSERR) {
+	printf("Cannot open LED.\n");
+	return 0;
+    }
+    edescr = open(LED,"unused","unused");	/* Try to open again */
+    if (edescr != SYSERR) {
+	printf("Opening LED that was already open erroneously succeeded.\n");
+	return 0;
+    }
+    if (close(descr) != OK) {			/* Try to close */
+	printf("Cannot close LED.\n");
+	return 0;
+    }
+    if (close(descr) != SYSERR) {		/* Try to close again */
+	printf("Close of already closed LED erroneously succeeded.\n");
+	return 0;
+    }
+
+    /*------------------------------------------*/
+    /* Now try some I/O on a closed LED device. */
+    /*------------------------------------------*/
+    result = putc(descr,'Y');			/* putc to closed device */
+    if (result != SYSERR) {
+	printf("putc to closed device erroneously succeeded.\n");
+	return 0;
+    }
+    result = write(descr,"Y",1);		/* write closed device */
+    if (result != SYSERR) {
+	printf("write to closed device erroneously succeeded.\n");
+	return 0;
+    }
+    result = getc(descr);			/* getc */
+    if (result != SYSERR) {
+	printf("getc to closed device erroneously succeeded.\n");
+	return 0;
+    }
+    result = read(descr,buff,1);		/* read closed device */
+    if (result != SYSERR) {
+	printf("read from closed device erroneously succeeded.\n");
+	return 0;
+    }
+
+    /*----------------------*/
+    /* Open the LED device. */
+    /*----------------------*/
+    descr = open(LED,"unused","unused");	/* Try to open again */
+    if (descr == SYSERR) {
+	printf("Cannot open LED the second time.\n");
+	return 0;
+    }
+
+    /*--------------------------------------*/
+    /* Verify the initial LED state is off. */
+    /*--------------------------------------*/
+    result = getc(descr);			/* getc */
+    if (result == SYSERR) {
+	printf("getc on open device failed when it should have succeeded.\n");
+	return 0;
+    }
+    if (result != 'N') {
+	printf("getc succeeded but returned %c; it should have returned 'N'\n");
+	return 0;
+    }
+
+    /*-------------------------------------------*/
+    /* Now try normal I/O, and a few bad values. */
+    /*-------------------------------------------*/
+    result = putc(descr,'Y');			/* putc */
+    if (result != OK) {
+	printf("putc 'Y' failed when it should have succeeded.\n");
+	return 0;
+    }
+    result = putc(descr,'N');			/* putc */
+    if (result != OK) {
+	printf("putc 'N' failed when it should have succeeded.\n");
+	return 0;
+    }
+    result = putc(descr,'X');			/* putc */
+    if (result != SYSERR) {
+	printf("putc 'X' succeeded when it should have failed.\n");
+	return 0;
+    }
+    buff[0] = 'Y';
+    result = write(descr,buff,1);		/* write */
+    if (result == SYSERR) {
+	printf("write 'Y' failed when it should have succeeded.\n");
+	return 0;
+    }
+    buff[0] = 'N';
+    result = write(descr,buff,1);		/* write */
+    if (result == SYSERR) {
+	printf("write 'N' failed when it should have succeeded.\n");
+	return 0;
+    }
+    buff[0] = 'Y';
+    buff[1] = 'N';
+    result = write(descr,buff,2);		/* write */
+    if (result != SYSERR) {
+	printf("write \"YN\" succeeded when it should have failed.\n");
+	return 0;
+    }
+    buff[0] = 'Z';
+    result = write(descr,buff,1);		/* write */
+    if (result != SYSERR) {
+	printf("write 'Z' succeeded when it should have failed.\n");
+	return 0;
+    }
+    result = getc(descr);			/* getc */
+    if (result == SYSERR) {
+	printf("getc on open device failed when it should have succeeded.\n");
+	return 0;
+    }
+    result = read(descr,buff,2);		/* try to read too much */
+    if (result != SYSERR) {
+	printf("Attempt to read 2 bytes succeeded, but should have failed.\n");
+	return 0;
+    }
+    putc(descr,'Y');
+    result = getc(descr);
+    if (result != 'Y') {
+	printf("getc returned %c, but should have returned 'Y'\n", result);
+	return 0;
+    }
+
+    close(descr);				/* finish up */
+    return 1;
 }

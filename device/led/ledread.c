@@ -18,13 +18,14 @@
 extern struct leddevice ldev;
 
 devcall ledread(
-        did32 device,           /* device Id to use */
-        int32 n                 /* Number of characaters asked to read */
+        struct dentry *devptr,       /* device Id to use */
+        char *buff,                 /* buffer to hold data */
+        uint32 n                    /* Number of characaters asked to read */
         )
 {
 
     /* check for a bad device */
-    if (isbaddev(device) || device != LED0) {
+    if (isbaddev(devptr->dvnum) || devptr->dvnum != LED) {
         return (devcall)SYSERR;
     }
 
@@ -38,6 +39,7 @@ devcall ledread(
         return (devcall)SYSERR;
     }
 
+    buff[0] = ldev.illuminated;
     /* return the illuminated flag */
-    return (devcall)ldev.illuminated;
+    return (devcall)OK;
 }

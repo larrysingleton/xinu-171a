@@ -18,14 +18,14 @@
 extern struct leddevice ldev;
 
 devcall ledwrite(
-        did32 device,           /* device Id to use */
+        struct dentry *devptr,  /* device Id to use */
         char *buff,             /* Character to write */
-        int32 n                 /* Number of characaters asked to write */
+        uint32 n                 /* Number of characaters asked to write */
         )
 {
 
      /* check for a bad device */
-     if (isbaddev(device) || device != LED0) {
+     if (isbaddev(devptr->dvnum) || devptr->dvnum != LED) {
          return (devcall)SYSERR;
      }
 

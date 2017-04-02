@@ -17,11 +17,15 @@
 
 extern struct leddevice ldev;
 
-devcall ledopen( void )
+devcall ledopen( 
+     struct dentry *devptr,     /* Entry in device switch table */
+     char *unused1,             /* Unused */
+     char *unused2              /* Unused */
+    )
 {
 
     /* check to ensure device is good */
-    if (isbaddev(LED0)) { 
+    if (isbaddev(devptr->dvnum) || devptr->dvnum != LED) {
         return (devcall)SYSERR;
     }
 
@@ -34,5 +38,5 @@ devcall ledopen( void )
     ldev.status=LED_OPEN; 
 
     /* return the device id */
-    return (devcall)LED0;
+    return (devcall)devptr->dvnum;
 }

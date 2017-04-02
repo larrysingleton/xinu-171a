@@ -679,12 +679,12 @@ extern	int32	uechoread(struct dentry *, char *, int32);
 extern	int32	uechowrite(struct dentry *, char *, int32);
 
 /* in files led*.c */
-extern status   ledinit(void);
+extern int32	ledopen(struct dentry *, char *, char *);
+extern status   ledinit(struct dentry *);
 extern int32    ledclose(int32);
-extern int32	ledopen(void);
-extern int32	ledread(int32, int32);
-extern int32	ledwrite(int32, char *, int32);
-extern int32	ledgetc(int32);
+extern int32	ledread(struct dentry *, char *, uint32);
+extern int32	ledwrite(struct dentry *, char *, uint32);
+extern int32	ledgetc(struct dentry *);
 extern int32	ledputc(int32, char);
 
 /* in file unsleep.c */

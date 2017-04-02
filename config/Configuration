@@ -118,12 +118,12 @@ nam:
 		-intr ioerr
 
 /* type of LED device */
-LED:
-    on gpio_i2c
+led:
+    on nothing
         -i ledinit  -o ledopen  -c ledclose
         -r ledread  -g ledgetc  -p ledputc
         -w ledwrite -s ioerr    -n ioerr
-        -intr ioerr
+        -intr ionull
 
 
 %%
@@ -186,7 +186,7 @@ LED:
    /* SDMC is sdmc on sd -csr 0 -irq 0051 */
 
    /* Define a led device */
-   LED0 is LED on gpio_i2c
+   LED is led on nothing
 
 %%
 

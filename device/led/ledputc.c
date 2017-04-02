@@ -18,13 +18,13 @@
 extern struct leddevice ldev;
 
 devcall ledputc(
-        did32 device,   /* device Id to use */
-        char value
+        int32 device,  /* device Id to use */
+        char value             /* value to plut */
         )
 {
 
     /* check for a bad device */
-    if (isbaddev(device) || device != LED0) {
+    if (isbaddev(device) || device != LED) {
         return (devcall)SYSERR;
     }
 

@@ -13,8 +13,16 @@
 
 struct leddevice ldev;
 
-status ledinit (void)
+status ledinit (
+        struct dentry *devptr /*device pointer */
+        )
 {
+
+    /* check to ensure device is good */
+     if (isbaddev(devptr->dvnum) || devptr->dvnum != LED) {
+         return (devcall)SYSERR;
+     }
+ 
     /*--------------------------*/
     /* Initialize the datastructure. */
     /*--------------------------*/

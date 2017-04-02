@@ -50,7 +50,7 @@ extern	struct	dentry	devtab[]; /* one entry per device */
 #define LFILE3      22       /* type lfl      */
 #define LFILE4      23       /* type lfl      */
 #define LFILE5      24       /* type lfl      */
-#define LED0        25       /* type LED      */
+#define LED         25       /* type LED      */
 
 /* Control block sizes */
 

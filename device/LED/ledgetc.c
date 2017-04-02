@@ -23,7 +23,7 @@ devcall ledgetc(
 {
 
      /* check for a bad device */
-     if (isbaddev(device) || device != LED0) {
+     if (isbaddev(device) || device != LED) {
          return (devcall)SYSERR;
      }
 

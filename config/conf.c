@@ -194,8 +194,8 @@ struct	dentry	devtab[NDEVS] =
 	  (void *)lflgetc, (void *)lflputc, (void *)lflcontrol,
 	  (void *)0x0, (void *)ionull, 0 },
 
-/* LED0 is LED */
-	{ 25, 0, "LED0",
+/* LED is LED */
+	{ 25, 0, "LED",
 	  (void *)ledinit, (void *)ledopen, (void *)ledclose,
 	  (void *)ledread, (void *)ledwrite, (void *)ioerr,
 	  (void *)ledgetc, (void *)ledputc, (void *)ioerr,

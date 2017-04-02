@@ -21,7 +21,7 @@ devcall ledopen( void )
 {
 
     /* check to ensure device is good */
-    if (isbaddev(LED0)) { 
+    if (isbaddev(LED)) {
         return (devcall)SYSERR;
     }
 
@@ -34,5 +34,5 @@ devcall ledopen( void )
     ldev.status=LED_OPEN; 
 
     /* return the device id */
-    return (devcall)LED0;
+    return (devcall)LED;
 }

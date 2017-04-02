@@ -212,8 +212,12 @@ shellcmd xsh_blinkled(int nargs, char *args[]) {
             putc(descr, 'N');		/* extinguish the LED */
             sleepms(msec);
             n--;
-            printf(".");
+            printf(".");            /* print a status dot for each blink */
         }
+
+        /* add a new line */
+        printf("\n");
+
         /* Close device */
         close(descr);
 

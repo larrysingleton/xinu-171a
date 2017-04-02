@@ -18,19 +18,19 @@
 extern struct leddevice ldev;
 
 devcall ledputc(
-        did32 device,   /* device Id to use */
-        char value
+        struct dentry *device,  /* device to use */
+        char value             /* value to plut */
         )
 {
 
     /* check for a bad device */
-    if (isbaddev(device) || device != LED) {
-        return (devcall)SYSERR;
+    if (isbaddev(device->dvnum) || device->dvnum != LED) {
+        return SYSERR;
     }
 
     /* if the device is closed - return SYSERR */
     if (ldev.status==LED_CLOSE) {
-        return (devcall)SYSERR;
+        return SYSERR;
     }
 
     /*
@@ -42,12 +42,12 @@ devcall ledputc(
     } else if (value == LED_OFF) {
         vGalileoBlinkLEDUsingLegacyGPIO(0);
     } else {
-        return (devcall)SYSERR;
+        return SYSERR;
     }
 
     /* set the flag */
     ldev.illuminated = value;
 
     /* return OK */
-    return (devcall)OK;
+    return OK;
 }

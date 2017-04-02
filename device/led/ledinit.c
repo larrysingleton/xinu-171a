@@ -13,8 +13,16 @@
 
 struct leddevice ldev;
 
-status ledinit (void)
+status ledinit (
+        struct dentry *devptr /*device pointer */
+        )
 {
+
+    /* check to ensure device is good */
+     if (isbaddev(devptr->dvnum) || devptr->dvnum != LED) {
+         return (status) SYSERR;
+     }
+ 
     /*--------------------------*/
     /* Initialize the datastructure. */
     /*--------------------------*/
@@ -29,6 +37,6 @@ status ledinit (void)
     vGalileoLegacyGPIOInitializationForLED();
 
     /* return OK */
-    return (devcall)OK;
+    return (status) OK;
 }
 

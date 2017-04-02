@@ -18,20 +18,20 @@
 extern struct leddevice ldev;
 
 devcall ledgetc(
-        did32 device    /* device Id to use */
+        struct dentry *devptr   /* device Id to use */
         )
 {
 
      /* check for a bad device */
-     if (isbaddev(device) || device != LED) {
-         return (devcall)SYSERR;
+     if (isbaddev(devptr->dvnum) || devptr->dvnum != LED) {
+         return SYSERR;
      }
 
     /* if the device is not open - return SYSERR */
     if (ldev.status==LED_CLOSE) {
-        return (devcall)SYSERR;
+        return SYSERR;
     }
 
     /* return the illuminated flag */
-    return (devcall)ldev.illuminated;
+    return ldev.illuminated;
 }

@@ -50,7 +50,7 @@ extern	struct	dentry	devtab[]; /* one entry per device */
 #define LFILE3      22       /* type lfl      */
 #define LFILE4      23       /* type lfl      */
 #define LFILE5      24       /* type lfl      */
-#define LED         25       /* type LED      */
+#define LED         25       /* type led      */
 
 /* Control block sizes */
 
@@ -65,7 +65,7 @@ extern	struct	dentry	devtab[]; /* one entry per device */
 #define	Nlfs	1
 #define	Nlfl	6
 #define	Nnam	1
-#define	NLED	1
+#define	Nled	1
 
 #define DEVMAXNAME 24
 #define NDEVS 26

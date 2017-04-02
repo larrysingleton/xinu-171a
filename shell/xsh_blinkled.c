@@ -9,6 +9,8 @@
 #include <xinu.h>
 #include <stdlib.h>
 
+int ledcheck(void);
+
 extern struct leddevice ldev;
 
 static void usage(void) {
@@ -25,22 +27,6 @@ static void usage(void) {
     exit();
 }
 
-static void printIResult(int result, bool8 status) {
-    if(status) {
-        printf("%2d     \tOK\n", result);
-    } else {
-        printf("%2d     \tERROR\n", result);
-    }
-}
-
-static void printCResult(char result, bool8 status) {
-    if(status) {
-        printf("%2c     \tOK\n", result);
-    } else {
-        printf("%2c     \tERROR\n", result);
-    }
-}
-
 /*-------------------------------------------------------------------------*/
 /* Verify, to the extent possible, the proper operation of the LED device. */
 /* If an incorrect result is detected, display a message and return 0.     */
@@ -54,8 +40,7 @@ static void printCResult(char result, bool8 status) {
 /* standard C. In Xinu, putc returns OK on success. In standard C, putc    */
 /* returns the character written on success. We check for OK in this code. */
 /*-------------------------------------------------------------------------*/
-static int check(void)
-{
+static int check(void) {
     int32 descr;				/* valid descriptor */
     int32 edescr;				/* invalid descriptor */
     int32 result;				/* result of I/O */
@@ -193,8 +178,8 @@ static int check(void)
     return 1;
 }
 
+
 shellcmd xsh_blinkled(int nargs, char *args[]) {
-    did32 device;
     int n, msec;
 
     if (nargs == 2 && strcmp(args[1],"--help") == 0)
@@ -218,23 +203,23 @@ shellcmd xsh_blinkled(int nargs, char *args[]) {
         usage();
 
     if(check() == 1) {
-        /*------------------*/
+        /* Open device */
+        int32 descr = open(LED, "unused","unused");
         /* Do the blinking. */
-        /*------------------*/
-        device=ledopen();
         while (n > 0) {
-            ledputc(device, LED_ON);		/* illuminate the LED */
+            putc(descr,'Y');		/* illuminate the LED */
             sleepms(msec);
-            ledputc(device, LED_OFF);		/* extinguish the LED */
+            putc(descr, 'N');		/* extinguish the LED */
             sleepms(msec);
             n--;
             printf(".");
         }
+        /* Close device */
+        close(descr);
 
-        ledclose(device);
-        printf("\n");
         return 0;
     } else {
         printf("\nFailed to blink, device configuration invalid\n");
+        return SYSERR;
     }
 }

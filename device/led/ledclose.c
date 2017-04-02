@@ -19,18 +19,19 @@
 extern struct leddevice ldev;
 
 devcall ledclose(
-        int32   device  /* Device ID to use */
+        struct dentry *device /* device to close */
         )
 {
 
+
     /* check for a bad device */
-    if (isbaddev(device) || device != LED) {
-        return (devcall)SYSERR;
+    if (isbaddev(device->dvnum) || device->dvnum != LED) {
+        return SYSERR;
     }
 
     /* if the device is not open - return SYSERR */
     if (ldev.status != LED_OPEN) {
-     return (devcall)SYSERR;
+        return SYSERR;
     }
 
     /* make sure LED is not illuminated */
@@ -43,6 +44,6 @@ devcall ledclose(
     ldev.status=LED_CLOSE; 
 
     /* reurn OK */
-    return (devcall)OK;
+    return OK;
 }
 

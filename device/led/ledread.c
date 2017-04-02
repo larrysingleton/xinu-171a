@@ -18,26 +18,28 @@
 extern struct leddevice ldev;
 
 devcall ledread(
-        did32 device,           /* device Id to use */
-        int32 n                 /* Number of characaters asked to read */
+        struct dentry *devptr,       /* device Id to use */
+        char *buff,                 /* buffer to hold data */
+        uint32 n                    /* Number of characaters asked to read */
         )
 {
 
     /* check for a bad device */
-    if (isbaddev(device) || device != LED) {
-        return (devcall)SYSERR;
+    if (isbaddev(devptr->dvnum) || devptr->dvnum != LED) {
+        return SYSERR;
     }
 
     /* if the device is not open - return SYSERR */
     if (ldev.status==LED_CLOSE) {
-        return (devcall)SYSERR;
+        return SYSERR;
     }
 
     /* only 1 character allowed */
     if (n!=1) {
-        return (devcall)SYSERR;
+        return SYSERR;
     }
 
+    buff[0] = ldev.illuminated;
     /* return the illuminated flag */
-    return (devcall)ldev.illuminated;
+    return OK;
 }

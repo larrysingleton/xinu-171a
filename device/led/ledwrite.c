@@ -18,25 +18,25 @@
 extern struct leddevice ldev;
 
 devcall ledwrite(
-        did32 device,           /* device Id to use */
+        struct dentry *devptr,  /* device Id to use */
         char *buff,             /* Character to write */
-        int32 n                 /* Number of characaters asked to write */
+        uint32 n                 /* Number of characaters asked to write */
         )
 {
 
      /* check for a bad device */
-     if (isbaddev(device) || device != LED0) {
-         return (devcall)SYSERR;
+     if (isbaddev(devptr->dvnum) || devptr->dvnum != LED) {
+         return SYSERR;
      }
 
     /* if the device is not open - return SYSERR */
     if (ldev.status==LED_CLOSE) {
-        return (devcall)SYSERR;
+        return SYSERR;
     }
 
     /* only 1 character allowed */
     if (n!=1) {
-        return (devcall)SYSERR;
+        return SYSERR;
     }
 
     /*
@@ -48,12 +48,12 @@ devcall ledwrite(
     } else if (*buff == LED_OFF) {
         vGalileoBlinkLEDUsingLegacyGPIO(0);
     } else {
-        return (devcall)SYSERR;
+        return SYSERR;
     }
 
     /* set the flag */
     ldev.illuminated = *buff;
 
     /* return OK */
-    return (devcall)OK;
+    return OK;
 }

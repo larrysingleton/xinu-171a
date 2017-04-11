@@ -27,15 +27,18 @@ devcall	ramcontrol(
             } else {
                 return (devcall) SYSERR;
             }
-
-            LARGECOST = arg2
-
+            return;
 
         case RAM_CTL_ZERO:
-
+            /* Sets total head move cost to 0 */
+            SMALLCOST = 0;
+            DIST = 0;
+            LARGECOST = 0;
+            return;
 
         case RAM_CTL_READ:
 
+            return;
 
         default:
             return (devcall)SYSERR;

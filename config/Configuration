@@ -55,7 +55,7 @@ ram:
 	on mem
 		-i raminit	-o ramopen	-c ramclose
 		-r ramread	-g ioerr	-p ioerr
-		-w ramwrite	-s ioerr	-n ioerr
+		-w ramwrite	-s ioerr	-n ramcontrol
 		-intr ionull
 
 /* type of SD memory card */

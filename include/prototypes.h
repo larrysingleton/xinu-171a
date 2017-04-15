@@ -421,7 +421,7 @@ extern	devcall	ramread(struct dentry *, char *, int32);
 extern	devcall	ramwrite(struct dentry *, char *, int32);
 
 /* in file ramcontrol.c */
-extern devcall devcall ramcontrol(struct dentry *, int32, int32, int32);
+extern devcall ramcontrol(struct dentry *, int32, int32, int32);
 
 /* in file rdsclose.c */
 extern	devcall	rdsclose(struct dentry *);

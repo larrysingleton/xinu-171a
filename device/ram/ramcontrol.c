@@ -26,7 +26,8 @@ devcall	ramcontrol(
                     (arg1 / 65536) <= 0 ||              // Verify DIST will be greater than 0
                     (arg1 - (arg1 / 65536)) <= 0 ||     // Verify SMALLCOST will be greater than 0
                     arg2 <= 0 ||                        // Verify LARGECOST will be greater than 0
-                    (arg1 - (arg1 / 65536)) <= LARGECOST// Verify SMALLCOST will be greater than LARGECOST) {
+                    (arg1 - (arg1 / 65536)) <= LARGECOST // Verify SMALLCOST will be greater than LARGECOST
+                    ) {
                 return (devcall) SYSERR;
             }
 
@@ -35,21 +36,21 @@ devcall	ramcontrol(
             SMALLCOST = arg1 - DIST;
             LARGECOST = arg2;
 
-            return;
+            return (devcall) OK;
 
         case RAM_CTL_ZERO:
             /* Sets total head move cost to 0 */
             TOTALCOST = 0;
-            return;
+            return (devcall) OK;
 
         case RAM_CTL_READ:
             /* Stores the simulated RAM Disk movement cost */
-            if(N <= DIST) {
-                &arg1 = DIST * SMALLCOST;
+            if(1 <= DIST) { // Need to figure out where to get 1 from, supposed to be N.
+                arg1 = DIST * SMALLCOST; // Need to dereference ar1
             } else {
-                &arg1 = DIST * LARGECOST;
+                arg1 = DIST * LARGECOST; // Need to dereference ar1
             }
-            return;
+            return (devcall) OK;
 
         default:
             return (devcall)SYSERR;

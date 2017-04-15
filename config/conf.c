@@ -58,7 +58,7 @@ struct	dentry	devtab[NDEVS] =
 	{ 5, 0, "RAM0",
 	  (void *)raminit, (void *)ramopen, (void *)ramclose,
 	  (void *)ramread, (void *)ramwrite, (void *)ioerr,
-	  (void *)ioerr, (void *)ioerr, (void *)ioerr,
+	  (void *)ioerr, (void *)ioerr, (void *)ramcontrol,
 	  (void *)0x0, (void *)ionull, 0 },
 
 /* RFILESYS is rfs */

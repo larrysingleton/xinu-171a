@@ -38,6 +38,7 @@
 #include <quark_pdat.h>
 #include <quark_irq.h>
 #include <multiboot.h>
+#include <ramdisk.h>
 #include <stdio.h>
 #include <string.h>
 #include <setjmp.h>

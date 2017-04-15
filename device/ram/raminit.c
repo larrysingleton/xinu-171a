@@ -1,7 +1,6 @@
 /* raminit.c  -  raminit */
 
 #include <xinu.h>
-#include <ramdisk.h>
 
 struct	ramdisk	Ram;
 
@@ -17,10 +16,10 @@ struct	ramdisk	Ram;
  * smaller than that of any device that initializes the RAM disk content.
  */
 
-extern int32 DIST;
-extern int32 SMALLCOST;
-extern int32 LARGECOST;
-extern int32 TOTALCOST;
+int32 DIST;
+int32 SMALLCOST;
+int32 LARGECOST;
+int32 TOTALCOST;
 
 devcall	raminit (
 	  struct dentry	*devptr		/* Entry in device switch table	*/

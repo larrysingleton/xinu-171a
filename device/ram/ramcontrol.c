@@ -21,19 +21,19 @@ devcall	ramcontrol(
     /* Process the request */
     switch ( func )	{
         case RAM_CTL_SET:
+            /* Extract and save DIST, SMALLCOST, and LARGECOST */
+            printf("RAM_CTL_SET called %d %d", arg1, arg2);
+
+            int32 dist = arg1 >> 16;
+            int32 scost = arg1 & 0xffff;
+
             /* Validate inputs */
-            if(
-                    (arg1 / 65536) <= 0 ||              // Verify DIST will be greater than 0
-                    (arg1 - (arg1 / 65536)) <= 0 ||     // Verify SMALLCOST will be greater than 0
-                    arg2 <= 0 ||                        // Verify LARGECOST will be greater than 0
-                    (arg1 - (arg1 / 65536)) <= LARGECOST // Verify SMALLCOST will be greater than LARGECOST
-                    ) {
+            if(dist <= 0 || scost <= 0 || arg2 <= 0 || scost <= arg2) {
                 return (devcall) SYSERR;
             }
 
-            /* Extract and save DIST, SMALLCOST, and LARGECOST */
-            DIST = arg1 / 65536;
-            SMALLCOST = arg1 - DIST;
+            DIST = dist;
+            SMALLCOST = scost;
             LARGECOST = arg2;
 
             return (devcall) OK;
@@ -44,12 +44,14 @@ devcall	ramcontrol(
             return (devcall) OK;
 
         case RAM_CTL_READ:
+            printf("RAM_CTL_READ called %d %d", arg1, arg2);
             /* Stores the simulated RAM Disk movement cost */
             if(1 <= DIST) { // Need to figure out where to get 1 from, supposed to be N.
-                arg1 = DIST * SMALLCOST; // Need to dereference ar1
+                arg1 = DIST * SMALLCOST;
             } else {
-                arg1 = DIST * LARGECOST; // Need to dereference ar1
+                arg1 = DIST * LARGECOST;
             }
+            printf("RAM_CTL_READ after %d %d", arg1, arg2);
             return (devcall) OK;
 
         default:

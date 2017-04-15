@@ -100,6 +100,9 @@ extern	shellcmd  xsh_rw0	(int32, char *[]);
 /* in file xsh_ramset */
 extern  shellcmd xsh_ramset (int32, char *[]);
 
+/* in file xsh_ramzero */
+extern  shellcmd xsh_ramzero (int32, char *[]);
+
 /* in file xsh_sum.c */
 extern	shellcmd  xsh_sum	(int32, char *[]);
 

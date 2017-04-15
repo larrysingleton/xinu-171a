@@ -35,9 +35,11 @@ devcall	raminit (
 {
 	memcpy(Ram.disk, "hopeless", 8);
 	memcpy( &Ram.disk[8], Ram.disk, RM_BLKSIZ * RM_BLKS - 8);
+
 	DIST = 0;
 	SMALLCOST = 0;
-	LARGECOST = 0;
+	LARGECOST = 1;
     TOTALCOST = 0;
+
 	return OK;
 }

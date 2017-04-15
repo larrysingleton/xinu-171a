@@ -16,6 +16,12 @@ struct	ramdisk	Ram;
  * Basically this means that the device number for a RAM disk must be
  * smaller than that of any device that initializes the RAM disk content.
  */
+
+extern int32 DIST;
+extern int32 SMALLCOST;
+extern int32 LARGECOST;
+extern int32 TOTALCOST;
+
 devcall	raminit (
 	  struct dentry	*devptr		/* Entry in device switch table	*/
 	)
@@ -25,5 +31,6 @@ devcall	raminit (
 	DIST = 0;
 	SMALLCOST = 0;
 	LARGECOST = 0;
+    TOTALCOST = 0;
 	return OK;
 }

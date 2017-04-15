@@ -14,7 +14,3 @@ struct	ramdisk	{
 	};
 
 extern	struct	ramdisk	Ram;
-
-extern int32 DIST;
-extern int32 SMALLCOST;
-extern int32 LARGECOST;

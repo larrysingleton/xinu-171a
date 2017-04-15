@@ -353,7 +353,7 @@ set(SOURCE_FILES
         system/write.c
         system/xdone.c
         system/yield.c
-        utel/utel.c)
+        utel/utel.c device/ram/ramcontrol.c)
 
 include_directories(config
                     include)

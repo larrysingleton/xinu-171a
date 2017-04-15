@@ -91,6 +91,12 @@ extern	shellcmd  xsh_rename	(int32, char *[]);
 /* in file xsh_rm.c */
 extern	shellcmd  xsh_rm	(int32, char *[]);
 
+/* in file xsh_rm.c */
+extern	shellcmd  xsh_rr0	(int32, char *[]);
+
+/* in file xsh_rm.c */
+extern	shellcmd  xsh_rw0	(int32, char *[]);
+
 /* in file xsh_sum.c */
 extern	shellcmd  xsh_sum	(int32, char *[]);
 

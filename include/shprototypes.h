@@ -97,6 +97,9 @@ extern	shellcmd  xsh_rr0	(int32, char *[]);
 /* in file xsh_rm.c */
 extern	shellcmd  xsh_rw0	(int32, char *[]);
 
+/* in file xsh_fgen */
+extern  shellcmd xsh_fgen (int32, char *[]);
+
 /* in file xsh_ramset */
 extern  shellcmd xsh_ramset (int32, char *[]);
 

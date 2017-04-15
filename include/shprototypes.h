@@ -103,6 +103,9 @@ extern  shellcmd xsh_fgen (int32, char *[]);
 /* in file xsh_ramset */
 extern  shellcmd xsh_ramset (int32, char *[]);
 
+/* in file xsh_ramcost */
+extern  shellcmd xsh_ramcost (int32, char *[]);
+
 /* in file xsh_ramzero */
 extern  shellcmd xsh_ramzero (int32, char *[]);
 

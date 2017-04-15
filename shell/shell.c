@@ -46,6 +46,7 @@ const	struct	cmdent	cmdtab[] = {
 	{"rr0",		FALSE,	xsh_rr0},
 	{"rw0",		FALSE,	xsh_rw0},
 	{"ramset",	FALSE,	xsh_ramset},
+	{"ramcost",	FALSE,	xsh_ramcost},
 	{"ramzero",	FALSE,	xsh_ramzero},
 	{"sleep",	FALSE,	xsh_sleep},
 	{"sum",		FALSE,	xsh_sum},

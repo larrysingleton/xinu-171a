@@ -1,6 +1,12 @@
+/*
+ * CSCI-8530 - Programming Assignment 3
+ * Authors:
+ *      Larry Singleton & Zac McFarland
+ */
 
 #include <xinu.h>
 #include <stdlib.h>
+#include <ramdisk.h>
 
 /*------------------------------------------------------------------------
  * xsh_ramset - define DIST, SMALLCOST, and LARGECOST

@@ -1,5 +1,13 @@
 /* ramwrite.c  -  ramwrite */
 
+/*
+ * CSCI-8530 - Programming Assignment 3
+ * Authors:
+ *      Larry Singleton & Zac McFarland
+ *
+ *
+ */
+
 #include <xinu.h>
 #include <ramdisk.h>
 

@@ -22,7 +22,7 @@ shellcmd xsh_ramcost(int nargs, char *args[]) {
     if (nargs == 2 && strncmp(args[1], "--help", 7) == 0) {
         printf("Use: %s \n\n", args[0]);
         printf("Description:\n");
-        printf("\t display the total head movement cost\n"):
+        printf("\t display the total head movement cost\n");
         printf("Options:\n");
         printf("\t--help\t display this help and exit\n");
         return OK;

@@ -7,12 +7,14 @@
 #include <xinu.h>
 #include <stdlib.h>
 #include <ramdisk.h>
+#include <limits.h>
 
 /*------------------------------------------------------------------------
  * xsh_ramset - define DIST, SMALLCOST, and LARGECOST
  *------------------------------------------------------------------------
  */
 shellcmd xsh_ramset(int nargs, char *args[]) {
+    int combined;
 
     /*-----------------------------------------------------------*/
     /* For argument '--help', emit help about the 'ramset' command. */
@@ -45,8 +47,8 @@ shellcmd xsh_ramset(int nargs, char *args[]) {
         return SYSERR;
     }
 
-
-    control(RAM0, RAM_CTL_SET, dist * 65536 + smallCost, largeCost);
+    combined = dist << 16 | smallCost;
+    control(RAM0, RAM_CTL_SET, combined, largeCost);
 
     return OK;
 }

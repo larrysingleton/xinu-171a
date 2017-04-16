@@ -15,6 +15,7 @@
 shellcmd xsh_ramcost(int nargs, char *args[]) {
 
     int status;
+    int cost;
 
     /*-----------------------------------------------------------*/
     /* For argument '--help', emit help about the 'ramzero' command. */
@@ -28,7 +29,8 @@ shellcmd xsh_ramcost(int nargs, char *args[]) {
         return OK;
     }
 
-    status = control(RAM0, RAM_CTL_READ, 0, 0);
+    status = control(RAM0, RAM_CTL_READ, (int) &cost, 0);
+    fprintf(stdout, "ramcost: %d\n", cost);
 
     return status;
 }

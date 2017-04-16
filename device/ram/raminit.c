@@ -28,6 +28,7 @@ int32 DIST;
 int32 SMALLCOST;
 int32 LARGECOST;
 int32 TOTALCOST;
+int32 POSITION;
 
 devcall	raminit (
 	  struct dentry	*devptr		/* Entry in device switch table	*/
@@ -40,6 +41,7 @@ devcall	raminit (
 	SMALLCOST = 0;
 	LARGECOST = 1;
     TOTALCOST = 0;
+    POSITION = 0;
 
 	return OK;
 }

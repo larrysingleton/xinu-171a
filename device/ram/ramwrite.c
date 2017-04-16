@@ -11,6 +11,12 @@
 #include <xinu.h>
 #include <ramdisk.h>
 
+extern int POSITION;
+extern int DIST;
+extern int TOTALCOST;
+extern int SMALLCOST;
+extern int LARGECOST;
+
 /*------------------------------------------------------------------------
  * ramwrite  -  Write a block to a ram disk
  *------------------------------------------------------------------------
@@ -25,5 +31,18 @@ devcall	ramwrite (
 
 	bpos = RM_BLKSIZ * blk;
 	memcpy(&Ram.disk[bpos], buff, RM_BLKSIZ);
-	return OK;
+
+    if (POSITION < RM_BLKS-1) {
+        POSITION += 1;
+    } else {
+        POSITION = 0;
+    }
+
+    if (blk <= DIST) {
+        TOTALCOST += blk * SMALLCOST;
+    } else {
+        TOTALCOST += blk * LARGECOST;
+    }
+
+    return OK;
 }

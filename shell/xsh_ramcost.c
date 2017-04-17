@@ -15,7 +15,7 @@
 shellcmd xsh_ramcost(int nargs, char *args[]) {
 
     int status;
-    int cost;
+    int cost=999;
 
     /*-----------------------------------------------------------*/
     /* For argument '--help', emit help about the 'ramzero' command. */

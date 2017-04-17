@@ -10,6 +10,7 @@
 
 #include <xinu.h>
 #include <ramdisk.h>
+#include <stdlib.h>
 
 extern int POSITION;
 extern int DIST;
@@ -28,21 +29,29 @@ devcall	ramread (
 	)
 {
 	int32	bpos;			/* Byte position of blk		*/
+    int32   distance;
 
 	bpos = RM_BLKSIZ * blk;
 	memcpy(buff, &Ram.disk[bpos], RM_BLKSIZ);
 
-    if (POSITION < RM_BLKS-1) {
-        POSITION += 1;
+    distance = abs(POSITION - blk);
+    fprintf(stdout, "distance [%d]\n", distance);
+    if (distance <= DIST) {
+        TOTALCOST += distance * SMALLCOST;
     } else {
-        POSITION = 0;
+        TOTALCOST += distance * LARGECOST;
     }
 
-    if (blk <= DIST) {
-        TOTALCOST += blk * SMALLCOST;
+    if (distance > 0 ) {
+        if (POSITION < RM_BLKS-1) {
+            POSITION = blk + 1;
+        } else {
+            POSITION = 0;
+        }
     } else {
-        TOTALCOST += blk * LARGECOST;
+        ++POSITION;
     }
 
+    fprintf(stdout, "Position [%d]\n", POSITION);
 	return OK;
 }

@@ -1,11 +1,11 @@
 "Case ID","Total Cost"
-1,9365
-2,48295
-3,49220
-4,35277
-5,178695
-6,179570
-7,77611
-8,391485
-9,392360
+1,11715
+2,60260
+3,61310
+4,44387
+5,224580
+6,225580
+7,"panic: out of data blocks"
+8,"panic: out of data blocks"
+9,"panic: out of data blocks"
 10,34140

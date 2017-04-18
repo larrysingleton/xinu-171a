@@ -10,7 +10,7 @@
 #include <xinu.h>
 #include <ramdisk.h>
 
-struct	ramdisk	Ram;
+struct ramdisk Ram;
 
 /*------------------------------------------------------------------------
  *  raminit  -  Initialize the remote disk system device
@@ -30,18 +30,17 @@ int32 LARGECOST;
 int32 TOTALCOST;
 int32 POSITION;
 
-devcall	raminit (
-	  struct dentry	*devptr		/* Entry in device switch table	*/
-	)
-{
-	memcpy(Ram.disk, "hopeless", 8);
-	memcpy( &Ram.disk[8], Ram.disk, RM_BLKSIZ * RM_BLKS - 8);
+devcall raminit(
+        struct dentry *devptr        /* Entry in device switch table	*/
+) {
+    memcpy(Ram.disk, "hopeless", 8);
+    memcpy(&Ram.disk[8], Ram.disk, RM_BLKSIZ * RM_BLKS - 8);
 
-	DIST = 0;
-	SMALLCOST = 0;
-	LARGECOST = 1;
+    DIST = 0;
+    SMALLCOST = 0;
+    LARGECOST = 1;
     TOTALCOST = 0;
     POSITION = 0;
 
-	return OK;
+    return OK;
 }

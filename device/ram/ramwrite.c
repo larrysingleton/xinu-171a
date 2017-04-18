@@ -38,10 +38,21 @@ devcall	ramwrite (
         POSITION = 0;
     }
 
-    if (blk <= DIST) {
-        TOTALCOST += blk * SMALLCOST;
+    int32 distance = abs(POSITION - blk);
+    if (distance <= DIST) {
+        TOTALCOST += distance * SMALLCOST;
     } else {
-        TOTALCOST += blk * LARGECOST;
+        TOTALCOST += distance * LARGECOST;
+    }
+
+    if (distance > 0 ) {
+        if (POSITION < RM_BLKS-1) {
+            POSITION = blk + 1;
+        } else {
+            POSITION = 0;
+        }
+    } else {
+        ++POSITION;
     }
 
     return OK;

@@ -36,7 +36,6 @@ devcall	ramcontrol(
             dist = arg1 >> 16;
             smallCost = arg1 & 0xffff;
 
-
             /* Validate inputs */
             if(dist <= 0 || smallCost <= 0 || arg2 <= 0 || smallCost <= arg2) {
                 return (devcall) SYSERR;
@@ -46,21 +45,17 @@ devcall	ramcontrol(
             SMALLCOST = smallCost;
             LARGECOST = arg2;
 
-            fprintf(stdout, "RAM_CTL_SET: [%d] [%d] [%d]\n", dist, smallCost, arg2);
-
             return (devcall) OK;
 
         case RAM_CTL_ZERO: 
             /* Sets total head move cost to 0 */
             TOTALCOST = 0;
-            fprintf(stdout, "RAM_CTL_ZERO [%d]\n", TOTALCOST);
             return (devcall) OK;
 
         case RAM_CTL_READ: 
             /* Sets the simulated RAM Disk movement cost */
             /* saved in arg1 as a pointer to an integer */
             *((int *)arg1) = TOTALCOST;
-            fprintf(stdout, "RAM_CTL_READ [%d]\n", TOTALCOST);
             return (devcall) OK;
 
         default:

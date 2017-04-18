@@ -1,0 +1,38 @@
+CASE-8 =======================
+mklfs -f
+ramset 5 10 5
+fgen f1 12000
+ramzero
+cp f1 f2
+cp f1 f3
+cp f1 f4
+cp f1 f5
+cp f1 f6
+cp f1 f7
+cp f1 f8
+cp f1 f9
+ramcost
+
+CASE-9 =======================
+mklfs -f
+ramset 10 10 5
+fgen f1 12000
+ramzero
+cp f1 f2
+cp f1 f3
+cp f1 f4
+cp f1 f5
+cp f1 f6
+cp f1 f7
+cp f1 f8
+cp f1 f9
+ramcost
+
+CASE-10 =======================
+mklfs -f 
+ramset 1 1 1
+fgen f1 36000
+ramzero
+cp f1 f2
+ramcost
+

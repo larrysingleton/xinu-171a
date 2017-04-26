@@ -1,16 +1,22 @@
 /* raminit.c  -  raminit */
 
-/*
- * CSCI-8530 - Programming Assignment 3
- * Authors:
- *      Larry Singleton & Zac McFarland
- */
-
+/*----------------------------------------------------------------------*/
+/* This version of raminit contains suggestions about the modifications */
+/* that might be included to add the disk caching needed for the fourth */
+/* assignment for CSCI 8530, Spring 2017. Each suggested modification   */
+/* is marked with a comment including "XXX".                            */
+/*----------------------------------------------------------------------*/
 
 #include <xinu.h>
 #include <ramdisk.h>
 
-struct ramdisk Ram;
+extern uint32 ram_pos;		/* block where simulated head is positioned. */
+extern uint32 ram_dist;		/* dist above which ram_largecost applies. */
+extern uint32 ram_smallcost;	/* cost to move 1..ram_dist "blocks" */
+extern uint32 ram_largecost;	/* cost to move more than ram_dist "blockst" */
+extern uint32 ram_seek_cost;	/* accumulated "head movement" cost */
+
+struct	ramdisk	Ram;
 
 /*------------------------------------------------------------------------
  *  raminit  -  Initialize the remote disk system device
@@ -23,24 +29,41 @@ struct ramdisk Ram;
  * Basically this means that the device number for a RAM disk must be
  * smaller than that of any device that initializes the RAM disk content.
  */
+devcall	raminit (
+    struct dentry*devptr		/* Entry in device switch table	*/
+)
+{
+    int index;
 
-int32 DIST;
-int32 SMALLCOST;
-int32 LARGECOST;
-int32 TOTALCOST;
-int32 POSITION;
-
-devcall raminit(
-        struct dentry *devptr        /* Entry in device switch table	*/
-) {
+    /*-----------------------------------*/
+    /* Fill the ram disk with something. */
+    /*-----------------------------------*/
     memcpy(Ram.disk, "hopeless", 8);
-    memcpy(&Ram.disk[8], Ram.disk, RM_BLKSIZ * RM_BLKS - 8);
+    memcpy( &Ram.disk[8], Ram.disk, RM_BLKSIZ * RM_BLKS - 8);
 
-    DIST = 0;
-    SMALLCOST = 0;
-    LARGECOST = 1;
-    TOTALCOST = 0;
-    POSITION = 0;
+    /*--------------------------*/
+    /* Initialize the Ram Cache */
+    /*--------------------------*/
+    RamCacheHead = -1;
+    RamCacheFree = 0;
+    for (index=0; index<RM_CACHE; index++) {
+        RamCache[index].next = -1;
+        RamCache[index].blockno = -1;
+        memcpy(RamCache[index].block, 0, RM_BLKSIZ);
+    }
+
+    /*------------------------------------------------------*/
+    /* Initialize values for the disk seek cost simulation. */
+    /*------------------------------------------------------*/
+    ram_pos = 0;
+    ram_dist = 0;
+    ram_smallcost = 0;
+    ram_largecost = 1;
+    ram_seek_cost = 0;
+
+    /*----------------------------------------------------*/
+    /* XXX Build a free list of the blocks for the cache. */
+    /*----------------------------------------------------*/
 
     return OK;
 }

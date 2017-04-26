@@ -36,6 +36,28 @@ devcall	ramread (
     /* XXX not at the head of the list of cached entries, then    */
     /* XXX move it there. Then return.                            */
     /*------------------------------------------------------------*/
+    int index = RamCacheHead;
+    int prev = RamCacheHead;
+    while ( index != -1 && 
+            RamCache[index].blockno != -1) {
+
+        /* check if block numbers match */
+        if (RamCache[index].blockno == blk) {
+            memcpy(buff, RamCache[index].block, RM_BLKSIZ);
+
+            /* move to head of list of cached entries */
+            if (index != RamCacheHead) {
+                RamCache[prev].next = RamCache[index].next;
+                RamCache[index].next = RamCacheHead;
+                RamCacheHead = index;
+            }
+            return OK;
+
+        } else { /* set index to next */
+            prev = index;
+            index = RamCache[index].next;
+        }
+    }
 
     /*-----------------------------------------------------------------*/
     /* Block not in cache; perform simulated "seek" to right position. */
@@ -68,6 +90,30 @@ devcall	ramread (
     /* XXX used entry). Copy the data just read from the "disk" to  */
     /* XXX to the entry, and make the entry the head of the list.   */
     /*--------------------------------------------------------------*/
+    if (RamCacheFree != -1) { /* list is not empty */
+        index = RamCacheFree;                   /* save the index */
+        RamCacheFree = RamCache[index].next;    /* reset the free pointer to the next block */
+        RamCache[index].next = RamCacheHead;    /* set the next value to the head index */
+        RamCacheHead = index;                   /* reset the head pointer */
+
+        /* copy the data into the head */
+        memcpy(RamCache[RamCacheHead].block, buff, RM_BLKSIZ);
+        RamCache[RamCacheHead].blockno = blk;
+    } else { /* get LRU block from cached list - block at end of list*/
+        index = RamCacheHead;
+        prev = RamCacheHead;
+        while (RamCache[index].next != -1) {
+            prev = index;
+            index = RamCache[index].next;
+        }
+        
+        /* move LRU entry to head of list of cached entries */
+        if (index != RamCacheHead) {
+            RamCache[prev].next = -1;
+            RamCache[index].next = RamCacheHead;
+            RamCacheHead = index;
+        }
+    }
 
     return OK;
 }

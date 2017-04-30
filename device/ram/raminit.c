@@ -46,7 +46,7 @@ devcall	raminit (
     /*--------------------------*/
     RamCacheHead = -1;
     RamCacheFree = 0;
-    for (index=0; index<RM_CACHE; index++) {
+    for (index=0; index < RM_CACHE; index++) {
         RamCache[index].next = index + 1;
         RamCache[index].blockno = -1;
         memcpy(RamCache[index].block, 0, RM_BLKSIZ);

@@ -38,9 +38,7 @@ devcall	ramread (
     /*------------------------------------------------------------*/
     int index = RamCacheHead;
     int prev = RamCacheHead;
-    while ( index != -1 && 
-            RamCache[index].blockno != -1) {
-
+    while (index != -1 && RamCache[index].blockno != -1) {
         /* check if block numbers match */
         if (RamCache[index].blockno == blk) {
             memcpy(buff, RamCache[index].block, RM_BLKSIZ);

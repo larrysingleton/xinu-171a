@@ -59,6 +59,27 @@ devcall	ramwrite (
     /* XXX it to the head of the list of cached entries, if it is not */
     /* XXX already there.                                             */
     /*----------------------------------------------------------------*/
+    int index = RamCacheHead;
+    int prev = RamCacheHead;
+    while (index != -1 && RamCache[index].blockno != -1) {
+        /* check if block numbers match */
+        if (RamCache[index].blockno == blk) {
+            /* write updated value into cache */
+            memcpy(RamCache[index].block, buff, RM_BLKSIZ);
+
+            /* move to head of list of cached entries */
+            if (index != RamCacheHead) {
+                RamCache[prev].next = RamCache[index].next;
+                RamCache[index].next = RamCacheHead;
+                RamCacheHead = index;
+            }
+            return OK;
+
+        } else { /* set index to next */
+            prev = index;
+            index = RamCache[index].next;
+        }
+    }
 
     return OK;
 }

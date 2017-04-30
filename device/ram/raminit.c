@@ -1,3 +1,10 @@
+/*
+ * CSCI-8530 - Programming Assignment 4
+ * Authors:
+ *      Larry Singleton & Zac McFarland
+ *
+ *
+*/
 /* raminit.c  -  raminit */
 
 /*----------------------------------------------------------------------*/

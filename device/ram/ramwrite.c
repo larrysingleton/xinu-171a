@@ -61,7 +61,6 @@ devcall	ramwrite (
     /*----------------------------------------------------------------*/
     int index = RamCacheHead;
     int prev = RamCacheHead;
-    printf("Checking to see if block %d is in cache\n", blk);
     while (index != -1 && RamCache[index].blockno != -1) {
         /* check if block numbers match */
         if (RamCache[index].blockno == blk) {
@@ -74,7 +73,6 @@ devcall	ramwrite (
                 RamCache[index].next = RamCacheHead;
                 RamCacheHead = index;
             }
-            printf("Block %d was in cache and was updated\n", blk);
             return OK;
 
         } else { /* set index to next */

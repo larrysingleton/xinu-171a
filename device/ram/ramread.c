@@ -36,6 +36,7 @@ devcall	ramread (
     /* XXX not at the head of the list of cached entries, then    */
     /* XXX move it there. Then return.                            */
     /*------------------------------------------------------------*/
+    printf("Reading block #%d\n", blk);
     int index = RamCacheHead;
     int prev = RamCacheHead;
     while (index != -1 && RamCache[index].blockno != -1) {
@@ -49,6 +50,7 @@ devcall	ramread (
                 RamCache[index].next = RamCacheHead;
                 RamCacheHead = index;
             }
+            printf("Returned cached block: %d\n", blk);
             return OK;
 
         } else { /* set index to next */
@@ -88,6 +90,7 @@ devcall	ramread (
     /* XXX used entry). Copy the data just read from the "disk" to  */
     /* XXX to the entry, and make the entry the head of the list.   */
     /*--------------------------------------------------------------*/
+    printf("Writing block #%d to cache\n", blk);
     if (RamCacheFree != -1) { /* list is not empty */
         index = RamCacheFree;                   /* save the index */
         RamCacheFree = RamCache[index].next;    /* reset the free pointer to the next block */
@@ -104,7 +107,7 @@ devcall	ramread (
             prev = index;
             index = RamCache[index].next;
         }
-        
+
         /* move LRU entry to head of list of cached entries */
         if (index != RamCacheHead) {
             RamCache[prev].next = -1;

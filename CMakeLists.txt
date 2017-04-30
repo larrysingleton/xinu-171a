@@ -353,7 +353,7 @@ set(SOURCE_FILES
         system/write.c
         system/xdone.c
         system/yield.c
-        utel/utel.c device/ram/ramcontrol.c shell/xsh_ramset.c)
+        utel/utel.c device/ram/ramcontrol.c shell/xsh_ramset.c shell/xsh_ramcachedump.c)
 
 include_directories(config
                     include)

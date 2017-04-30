@@ -109,6 +109,9 @@ extern  shellcmd xsh_ramcost (int32, char *[]);
 /* in file xsh_ramzero */
 extern  shellcmd xsh_ramzero (int32, char *[]);
 
+/* in file xsh_ramcachedump */
+extern  shellcmd xsh_ramcachedump (int32, char *[]);
+
 /* in file xsh_sum.c */
 extern	shellcmd  xsh_sum	(int32, char *[]);
 

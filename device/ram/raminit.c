@@ -46,12 +46,6 @@ devcall	raminit (
     /*--------------------------*/
     RamCacheHead = -1;
     RamCacheFree = 0;
-    for (index=0; index < RM_CACHE; index++) {
-        RamCache[index].next = index + 1;
-        RamCache[index].blockno = -1;
-        memcpy(RamCache[index].block, 0, RM_BLKSIZ);
-    }
-    RamCache[RM_CACHE].next = -1;
 
     /*------------------------------------------------------*/
     /* Initialize values for the disk seek cost simulation. */
@@ -65,6 +59,13 @@ devcall	raminit (
     /*----------------------------------------------------*/
     /* XXX Build a free list of the blocks for the cache. */
     /*----------------------------------------------------*/
+    for (index = 0; index < RM_CACHE; index++) {
+        RamCache[index].next = index + 1;
+        RamCache[index].blockno = -1;
+        memcpy(RamCache[index].block, 0, RM_BLKSIZ);
+    }
+    RamCache[RM_CACHE - 1].next = -1;
+
 
     return OK;
 }

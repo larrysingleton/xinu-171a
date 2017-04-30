@@ -1,3 +1,10 @@
+/*
+ * CSCI-8530 - Programming Assignment 4
+ * Authors:
+ *      Larry Singleton & Zac McFarland
+ *
+ *
+*/
 "Case ID","Total Cost"
 1,11067
 2,55740
